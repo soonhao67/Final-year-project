@@ -23,7 +23,7 @@
 #     app.run(debug=True)
 
 from flask import Flask, request, jsonify
-import joblib
+import joblib # type: ignore
 from flask_cors import CORS
 
 app = Flask(__name__)
