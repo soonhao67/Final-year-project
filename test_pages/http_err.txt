@@ -1,0 +1,4 @@
+::ffff:127.0.0.1 - - [27/May/2026 22:45:35] "GET /fake_paypal.html HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [27/May/2026 22:45:35] code 404, message File not found
+::ffff:127.0.0.1 - - [27/May/2026 22:45:35] "GET /favicon.ico HTTP/1.1" 404 -
+::ffff:127.0.0.1 - - [27/May/2026 22:49:04] "GET /fake_paypal.html HTTP/1.1" 304 -

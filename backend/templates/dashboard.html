@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhishVoider Dashboard</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f1f5f9;
+            color: #0f172a;
+            padding: 32px 24px;
+        }
+
+        .container { max-width: 1100px; margin: 0 auto; }
+
+        /* Header */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 28px;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .header-left img { width: 36px; height: 36px; }
+
+        .header-left h1 { font-size: 26px; font-weight: 700; }
+
+        .header-right {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 28px;
+        }
+
+        .stat-card {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 24px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 42px;
+            font-weight: 700;
+            line-height: 1.1;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 4px;
+        }
+
+        .stat-sub {
+            font-size: 12px;
+            color: #94a3b8;
+            margin-top: 8px;
+        }
+
+        .stat-card.total .stat-value { color: #0f172a; }
+        .stat-card.phishing .stat-value { color: #ef4444; }
+        .stat-card.safe .stat-value { color: #10b981; }
+
+        /* Graphs Section */
+        .graphs-section {
+            margin-bottom: 28px;
+        }
+
+        .graphs-section h2 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .graphs-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .graph-card {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .graph-card.full {
+            grid-column: 1 / -1;
+        }
+
+        .graph-card .graph-header {
+            padding: 14px 18px;
+            border-bottom: 1px solid #e2e8f0;
+            background: #f8fafc;
+            font-weight: 600;
+            font-size: 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .graph-card .graph-header .graph-desc {
+            font-weight: 400;
+            font-size: 12px;
+            color: #64748b;
+        }
+
+        .graph-card img {
+            width: 100%;
+            display: block;
+        }
+
+        /* History Table */
+        .history-section {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 28px;
+        }
+
+        .history-header {
+            padding: 16px 20px;
+            border-bottom: 1px solid #e2e8f0;
+            background: #f8fafc;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .history-header h2 { font-size: 16px; font-weight: 600; }
+
+        .history-header span { font-size: 13px; color: #64748b; }
+
+        .history-header-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn-csv {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #fff;
+            background: #0f172a;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background 0.15s;
+        }
+
+        .btn-csv:hover { background: #1e293b; }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        thead th {
+            text-align: left;
+            padding: 12px 20px;
+            border-bottom: 2px solid #e2e8f0;
+            font-size: 11px;
+            font-weight: 600;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            background: #fafafa;
+        }
+
+        tbody td {
+            padding: 12px 20px;
+            border-bottom: 1px solid #f1f5f9;
+            vertical-align: middle;
+        }
+
+        tbody tr:hover td { background: #f8fafc; }
+
+        .badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .badge.safe { background: #d1fae5; color: #065f46; }
+        .badge.low { background: #fef3c7; color: #92400e; }
+        .badge.medium { background: #fed7aa; color: #9a3412; }
+        .badge.high { background: #fee2e2; color: #991b1b; }
+
+        .url-cell {
+            max-width: 380px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            cursor: pointer;
+        }
+        .url-cell.expanded {
+            white-space: normal;
+            word-break: break-all;
+            overflow: visible;
+            text-overflow: clip;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #94a3b8;
+            font-size: 14px;
+        }
+
+        .refresh-note {
+            text-align: center;
+            font-size: 12px;
+            color: #94a3b8;
+            margin-top: 8px;
+            margin-bottom: 32px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-left">
+                <h1>🛡️ PhishVoider Dashboard</h1>
+            </div>
+            <div class="header-right" id="last-refresh">Loading...</div>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-grid">
+            <div class="stat-card total">
+                <div class="stat-value" id="stat-total">--</div>
+                <div class="stat-label">Total Scans</div>
+                <div class="stat-sub">All time</div>
+            </div>
+            <div class="stat-card phishing">
+                <div class="stat-value" id="stat-phishing">--</div>
+                <div class="stat-label">Phishing</div>
+                <div class="stat-sub">Threats blocked</div>
+            </div>
+            <div class="stat-card safe">
+                <div class="stat-value" id="stat-safe">--</div>
+                <div class="stat-label">Safe</div>
+                <div class="stat-sub">Legitimate sites</div>
+            </div>
+        </div>
+
+        <!-- Model Performance Graphs -->
+        <div class="graphs-section">
+            <h2>📈 Model Performance</h2>
+            <div class="graphs-grid">
+                <div class="graph-card">
+                    <div class="graph-header">
+                        Confusion Matrix
+                        <span class="graph-desc">TP / FP / TN / FN breakdown</span>
+                    </div>
+                    <img src="/evaluation/confusion_matrix.png" alt="Confusion Matrix" loading="lazy">
+                </div>
+                <div class="graph-card">
+                    <div class="graph-header">
+                        ROC Curve
+                        <span class="graph-desc">AUC = 0.9959</span>
+                    </div>
+                    <img src="/evaluation/roc_curve.png" alt="ROC Curve" loading="lazy">
+                </div>
+                <div class="graph-card">
+                    <div class="graph-header">
+                        Precision-Recall Curve
+                        <span class="graph-desc">AP = 0.9964</span>
+                    </div>
+                    <img src="/evaluation/precision_recall_curve.png" alt="Precision-Recall Curve" loading="lazy">
+                </div>
+                <div class="graph-card">
+                    <div class="graph-header">
+                        Feature Importance (Top 20)
+                        <span class="graph-desc">TF-IDF + handcrafted</span>
+                    </div>
+                    <img src="/evaluation/feature_importance.png" alt="Feature Importance" loading="lazy">
+                </div>
+                <div class="graph-card full">
+                    <div class="graph-header">
+                        Handcrafted Feature Importance
+                        <span class="graph-desc">Your 14 manual URL features ranked</span>
+                    </div>
+                    <img src="/evaluation/manual_feature_importance.png" alt="Manual Feature Importance" loading="lazy">
+                </div>
+            </div>
+        </div>
+
+        <!-- History -->
+        <div class="history-section">
+            <div class="history-header">
+                <h2>🕐 Recent Scans</h2>
+                <div class="history-header-right">
+                    <span id="history-count">Last 50 scans</span>
+                    <a href="/export/csv" class="btn-csv" download>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                        Export CSV
+                    </a>
+                </div>
+            </div>
+            <div id="history-body">
+                <div class="empty-state">Loading history...</div>
+            </div>
+        </div>
+
+        <div class="refresh-note">
+            Dashboard auto-refreshes every 30 seconds &middot;
+            <a href="/dashboard" style="color: #3b82f6;">Refresh now</a> &middot;
+            <a href="/stats" target="_blank" style="color: #3b82f6;">Stats API</a> &middot;
+            <a href="/history" target="_blank" style="color: #3b82f6;">History API</a>
+        </div>
+    </div>
+
+    <script>
+        async function loadDashboard() {
+            try {
+                const [statsRes, historyRes] = await Promise.all([
+                    fetch("/stats"),
+                    fetch("/history")
+                ]);
+                const stats = await statsRes.json();
+                const historyData = await historyRes.json();
+
+                // Stats
+                document.getElementById("stat-total").textContent = stats.total_scans ?? 0;
+                document.getElementById("stat-phishing").textContent = stats.total_phishing ?? 0;
+                document.getElementById("stat-safe").textContent = stats.total_safe ?? 0;
+
+                // Timestamp
+                document.getElementById("last-refresh").textContent =
+                    "Last updated: " + new Date().toLocaleTimeString();
+
+                // History table
+                const container = document.getElementById("history-body");
+                const rows = historyData.history || [];
+
+                if (rows.length === 0) {
+                    container.innerHTML = '<div class="empty-state">No scans recorded yet. Start browsing to see results here.</div>';
+                    return;
+                }
+
+                document.getElementById("history-count").textContent =
+                    rows.length + " scan" + (rows.length !== 1 ? "s" : "");
+
+                const table = document.createElement("table");
+                table.innerHTML = `
+                    <thead>
+                        <tr>
+                            <th>Time</th>
+                            <th>URL</th>
+                            <th>Domain</th>
+                            <th>Risk</th>
+                            <th>Confidence</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${rows.map(r => {
+                            const time = r.timestamp ? r.timestamp.slice(11, 19) : "--";
+                            const date = r.timestamp ? r.timestamp.slice(0, 10) : "";
+                            const risk = (r.risk_level || "UNKNOWN").toLowerCase();
+                            const prob = r.phishing_probability !== undefined
+                                ? (r.phishing_probability * 100).toFixed(1) + "%"
+                                : "--";
+                            return `<tr>
+                                <td style="white-space:nowrap;color:#64748b;font-size:12px;">${date}<br>${time}</td>
+                                <td class="url-cell" title="${escape(r.url)}">${escape(r.url)}</td>
+                                <td>${escape(r.domain || "--")}</td>
+                                <td><span class="badge ${risk}">${escape(r.risk_level || "---")}</span></td>
+                                <td style="font-weight:600;color:${r.label === 'phishing' ? '#ef4444' : '#10b981'}">${prob}</td>
+                            </tr>`;
+                        }).join("")}
+                    </tbody>
+                `;
+                container.innerHTML = "";
+                container.appendChild(table);
+            } catch (err) {
+                document.getElementById("stat-total").textContent = "!";
+                document.getElementById("last-refresh").textContent = "Offline: " + err.message;
+            }
+        }
+
+        // Click to expand/collapse long URLs (delegated — survives re-renders)
+        document.getElementById("history-body").addEventListener("click", (e) => {
+            const cell = e.target.closest(".url-cell");
+            if (cell) cell.classList.toggle("expanded");
+        });
+
+        function escape(s) {
+            const d = document.createElement("div");
+            d.textContent = s || "";
+            return d.innerHTML;
+        }
+
+        // Initial load
+        loadDashboard();
+        // Auto-refresh
+        setInterval(loadDashboard, 30000);
+    </script>
+</body>
+</html>

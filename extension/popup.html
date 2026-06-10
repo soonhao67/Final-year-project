@@ -1,13 +1,60 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <style>
-        body { font-family: Arial; width: 300px; padding: 10px; }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhishVoider</title>
+    <link rel="stylesheet" href="popup.css">
 </head>
-<body>
-    <h2>PhishVoider</h2>
-    <p id="status">Checking website...</p>
+<body id="app-body">
+    <div class="header">
+        <img src="icon-default.png" alt="Logo" class="logo">
+        <h1>PhishVoider</h1>
+    </div>
+    
+    <div class="main-content">
+        <!-- Loading / No-Data View -->
+        <div id="loading-view" class="view active">
+            <div class="spinner"></div>
+            <p id="loading-text" style="color: #6b7280; font-size: 14px;">Analyzing website...</p>
+        </div>
+
+        <!-- Result View -->
+        <div id="result-view" class="view">
+            <div id="status-icon" class="status-icon">🛡️</div>
+            <h2 id="status-title">Safe Website</h2>
+            <p id="status-url" class="url-text">example.com</p>
+            
+            <div class="confidence-container">
+                <div class="confidence-label">
+                    <span>AI Confidence</span>
+                    <span id="confidence-value">0%</span>
+                </div>
+                <div class="progress-bar">
+                    <div id="confidence-fill" class="progress-fill"></div>
+                </div>
+            </div>
+
+            <button id="details-toggle" class="details-toggle">URL Analysis result ▾</button>
+            <div id="details-panel" class="details-panel hidden">
+                <ul id="factors-list"></ul>
+            </div>
+
+            <button id="page-toggle" class="details-toggle hidden">Page Content Analysis result ▾</button>
+            <div id="page-panel" class="details-panel hidden">
+                <ul id="page-factors-list"></ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <button id="whitelist-btn" class="action-btn outline hidden">Whitelist Site</button>
+        <div style="display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%;">
+            <span style="font-size: 11px; color: #94a3b8;">Protected by PhishVoider AI</span>
+            <button id="settings-btn" class="icon-btn" title="Settings">⚙️</button>
+        </div>
+    </div>
+
+    <script src="popup.js"></script>
 </body>
-<script src="popup.js"></script>
 </html>

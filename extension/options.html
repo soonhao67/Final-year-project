@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhishVoider Settings</title>
+    <link rel="stylesheet" href="options.css">
+</head>
+<body>
+    <div class="container">
+        <header class="page-header">
+            <img src="icon-default.png" alt="PhishVoider" class="logo">
+            <h1>PhishVoider Settings</h1>
+        </header>
+
+        <!-- API Configuration -->
+        <section class="card">
+            <div class="card-header">
+                <span class="card-icon">🔗</span>
+                <h2>API Configuration</h2>
+            </div>
+            <div class="card-body">
+                <label for="api-url">Backend Server URL</label>
+                <div class="input-row">
+                    <input type="text" id="api-url" placeholder="http://127.0.0.1:5000" />
+                    <button id="test-btn" class="btn btn-outline">Test</button>
+                    <button id="save-url-btn" class="btn btn-primary">Save</button>
+                </div>
+                <p id="connection-status" class="status-msg"></p>
+            </div>
+        </section>
+
+        <!-- Whitelist Management -->
+        <section class="card">
+            <div class="card-header">
+                <span class="card-icon">📋</span>
+                <h2>Whitelisted Domains</h2>
+            </div>
+            <div class="card-body">
+                <p class="desc">Domains in this list will bypass phishing detection.</p>
+                <div id="whitelist-container">
+                    <div id="whitelist-empty" class="empty-state">No whitelisted domains yet.</div>
+                    <ul id="whitelist-list"></ul>
+                </div>
+                <div class="input-row add-domain-row">
+                    <input type="text" id="domain-input" placeholder="example.com" />
+                    <button id="add-domain-btn" class="btn btn-primary">Add Domain</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bypassed Domains (temporary ignore, NOT whitelisted) -->
+        <section class="card">
+            <div class="card-header">
+                <span class="card-icon">⏭️</span>
+                <h2>Bypassed Domains</h2>
+            </div>
+            <div class="card-body">
+                <p class="desc">Domains you clicked "Ignore Risk" on. These bypass detection temporarily but are <strong>not</strong> whitelisted — they stay here until removed.</p>
+                <div id="bypass-container">
+                    <div id="bypass-empty" class="empty-state">No bypassed domains yet.</div>
+                    <ul id="bypass-list"></ul>
+                </div>
+                <button id="clear-bypass-btn" class="btn btn-danger-outline">Clear All Bypassed Domains</button>
+            </div>
+        </section>
+
+        <!-- Scan Statistics -->
+        <section class="card">
+            <div class="card-header">
+                <span class="card-icon">📊</span>
+                <h2>Scan Statistics</h2>
+            </div>
+            <div class="card-body">
+                <div id="stats-loading" class="empty-state">Loading statistics...</div>
+                <div id="stats-content" class="stats-grid hidden">
+                    <div class="stat-box">
+                        <span class="stat-value" id="stat-total">0</span>
+                        <span class="stat-label">Total Scans</span>
+                    </div>
+                    <div class="stat-box stat-danger">
+                        <span class="stat-value" id="stat-phishing">0</span>
+                        <span class="stat-label">Phishing</span>
+                    </div>
+                    <div class="stat-box stat-safe">
+                        <span class="stat-value" id="stat-safe">0</span>
+                        <span class="stat-label">Safe</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Recent History -->
+        <section class="card">
+            <div class="card-header">
+                <span class="card-icon">🕐</span>
+                <h2>Recent Scans</h2>
+            </div>
+            <div class="card-body">
+                <div id="history-loading" class="empty-state">Loading history...</div>
+                <div id="history-content" class="hidden">
+                    <div id="history-summary" class="history-summary"></div>
+                    <table id="history-table">
+                        <thead>
+                            <tr>
+                                <th>Time</th>
+                                <th>URL</th>
+                                <th>Domain</th>
+                                <th>Risk</th>
+                                <th>Probability</th>
+                            </tr>
+                        </thead>
+                        <tbody id="history-body"></tbody>
+                    </table>
+                    <p id="history-empty" class="empty-state hidden">No scan history yet.</p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="page-footer">
+            <p>PhishVoider v2.0.0 — Protected by AI</p>
+        </footer>
+    </div>
+
+    <script src="options.js"></script>
+</body>
+</html>
