@@ -4,7 +4,7 @@
 
 <p align="center">
   <img src="/backend/screenshot/1.jpg" width="320" style="vertical-align: middle" alt="Extension popup showing scan result">
-  <img src="/backend/screenshot/2.jpg" width="280" style="vertical-align: middle" alt="Phishing warning interstitial page">
+  <img src="/backend/screenshot/2.jpg" width="240" style="vertical-align: middle" alt="Phishing warning interstitial page">
   <br>
   <em>Left: Extension popup with URL analysis result · Right: Warning page on phishing detection</em>
 </p>
