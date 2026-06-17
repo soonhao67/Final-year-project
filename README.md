@@ -154,6 +154,7 @@ The dataset (`dataset/urls.csv`) is a **merged collection of public datasets** (
 - [ISCX-URL2016](https://www.unb.ca/cic/datasets/url-2016.html) — University of New Brunswick
 - [PhishStorm](https://research.aalto.fi/en/datasets/phishstorm---a-phishing-url-dataset) — Aalto University
 - [Kaggle Phishing Dataset](https://www.kaggle.com/datasets/shashwatwork/phishing-dataset-for-machine-learning)
+- [Kaggle Malicious URLs Dataset](https://www.kaggle.com/datasets/sid321axn/malicious-urls-dataset)
 
 ---
 

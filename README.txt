@@ -188,6 +188,10 @@ Source Datasets (public, free to use for research):
       - https://www.kaggle.com/datasets/shashwatwork/phishing-dataset-for-machine-learning
       - Community-curated collection on Kaggle.
 
+  (4) Kaggle — Malicious URLs Dataset
+      - https://www.kaggle.com/datasets/sid321axn/malicious-urls-dataset
+      - Large collection of malicious and benign URLs with multiple attack categories.
+
 Note: The provided dataset/urls.csv is a pre-merged and cleaned version of
 the above sources, and is already included in the project. You do NOT need
 to download the individual source datasets unless you wish to reproduce
